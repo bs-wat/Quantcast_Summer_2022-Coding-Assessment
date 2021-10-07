@@ -12,24 +12,23 @@ def most_active_cookie(csv_file, request_date):
     with open(csv_file, "r") as cookie_log:
         lines = cookie_log.readlines()
 
-        for i in range(len(lines)):
-            if i > 0:
-                # separate the cookie and timestamp
-                entry = lines[i].split(",")
-                
-                cookie = entry[0]
-                time_stamp = entry[1]
+        for i in range(1,len(lines)):
+            # separate the cookie and timestamp
+            entry = lines[i].split(",")
+            
+            cookie = entry[0]
+            time_stamp = entry[1]
 
-                date = time_stamp.split("T")[0]
+            date = time_stamp.split("T")[0]
 
-                # not the request date -> no need to count the cookie -> go to next line
-                if date != request_date:
-                    continue
+            # not the request date -> no need to count the cookie -> go to next line
+            if date != request_date:
+                continue
 
-                if cookie not in cookie_counts:
-                    cookie_counts[cookie] = 1
-                else:
-                    cookie_counts[cookie] += 1
+            if cookie not in cookie_counts:
+                cookie_counts[cookie] = 1
+            else:
+                cookie_counts[cookie] += 1
 
     # find the highest cookie frequency
     max_freq = max(cookie_counts.values())
